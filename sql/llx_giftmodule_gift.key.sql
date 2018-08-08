@@ -16,7 +16,6 @@
 
 -- BEGIN MODULEBUILDER INDEXES
 ALTER TABLE llx_giftmodule_gift ADD INDEX idx_giftmodule_gift_rowid (rowid);
-ALTER TABLE llx_giftmodule_gift ADD INDEX idx_giftmodule_gift_ref (ref);
 ALTER TABLE llx_giftmodule_gift ADD INDEX idx_giftmodule_gift_entity (entity);
 ALTER TABLE llx_giftmodule_gift ADD INDEX idx_giftmodule_gift_fk_soc (fk_soc);
 ALTER TABLE llx_giftmodule_gift ADD INDEX idx_giftmodule_gift_status (status);

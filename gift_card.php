@@ -60,9 +60,9 @@ dol_include_once('/giftmodule/lib/gift.lib.php');
 $langs->loadLangs(array("giftmodule@giftmodule","other"));
 
 // Get parameters
-$id			= GETPOST('id', 'int');
+$id         = GETPOST('id', 'int');
 $ref        = GETPOST('ref', 'alpha');
-$action		= GETPOST('action', 'alpha');
+$action     = GETPOST('action', 'alpha');
 $cancel     = GETPOST('cancel', 'aZ09');
 $backtopage = GETPOST('backtopage', 'alpha');
 
@@ -94,7 +94,7 @@ if (empty($action) && empty($id) && empty($ref)) $action='view';
 $extralabels = $extrafields->fetch_name_optionals_label($object->table_element);
 
 // Load object
-include DOL_DOCUMENT_ROOT.'/core/actions_fetchobject.inc.php';  // Must be include, not include_once  // Must be include, not include_once. Include fetch and fetch_thirdparty but not fetch_optionals
+include DOL_DOCUMENT_ROOT.'/core/actions_fetchobject.inc.php';  // Must be include, not include_once. Include fetch and fetch_thirdparty but not fetch_optionals
 
 
 
@@ -129,9 +129,6 @@ if (empty($reshook))
 	include DOL_DOCUMENT_ROOT.'/core/actions_sendmails.inc.php';
 }
 
-
-
-
 /*
  * View
  *
@@ -162,34 +159,36 @@ jQuery(document).ready(function() {
 // Part to create
 if ($action == 'create')
 {
-	print load_fiche_titre($langs->trans("NewObject", $langs->transnoentitiesnoconv("Gift")));
+    print load_fiche_titre($langs->trans("NewObject", $langs->transnoentitiesnoconv("Gift")));
 
-	print '<form method="POST" action="'.$_SERVER["PHP_SELF"].'">';
-	print '<input type="hidden" name="token" value="'.$_SESSION['newtoken'].'">';
-	print '<input type="hidden" name="action" value="add">';
-	print '<input type="hidden" name="backtopage" value="'.$backtopage.'">';
+    print '<form method="POST" action="'.$_SERVER["PHP_SELF"].'">';
+    print '<input type="hidden" name="token" value="'.$_SESSION['newtoken'].'">';
+    print '<input type="hidden" name="action" value="add">';
+    print '<input type="hidden" name="backtopage" value="'.$backtopage.'">';
 
-	dol_fiche_head(array(), '');
+    dol_fiche_head(array(), '');
 
-	print '<table class="border centpercent">'."\n";
+    print '<table class="border centpercent">'."\n";
 
-	// Common attributes
-	include DOL_DOCUMENT_ROOT . '/core/tpl/commonfields_add.tpl.php';
+    // Common attributes
+    include DOL_DOCUMENT_ROOT . '/core/tpl/commonfields_add.tpl.php';
 
-	// Other attributes
-	include DOL_DOCUMENT_ROOT . '/core/tpl/extrafields_add.tpl.php';
+    // Other attributes
+    include DOL_DOCUMENT_ROOT . '/core/tpl/extrafields_add.tpl.php';
 
-	print '</table>'."\n";
+    print '</table>'."\n";
 
-	dol_fiche_end();
+    dol_fiche_end();
 
-	print '<div class="center">';
-	print '<input type="submit" class="button" name="add" value="'.dol_escape_htmltag($langs->trans("Create")).'">';
-	print '&nbsp; ';
-	print '<input type="'.($backtopage?"submit":"button").'" class="button" name="cancel" value="'.dol_escape_htmltag($langs->trans("Cancel")).'"'.($backtopage?'':' onclick="javascript:history.go(-1)"').'>';	// Cancel for create does not post form if we don't know the backtopage
-	print '</div>';
+    print '<input type="hidden" name="sign" id="sign_value" value="">';
 
-	print '</form>';
+    print '<div class="center">';
+    print '<input type="submit" class="button" name="add" value="'.dol_escape_htmltag($langs->trans("Create")).'">';
+    print '&nbsp; ';
+    print '<input type="'.($backtopage?"submit":"button").'" class="button" name="cancel" value="'.dol_escape_htmltag($langs->trans("Cancel")).'"'.($backtopage?'':' onclick="javascript:history.go(-1)"').'>';	// Cancel for create does not post form if we don't know the backtopage
+    print '</div>';
+
+    print '</form>';
 }
 
 // Part to edit record

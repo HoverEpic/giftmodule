@@ -65,10 +65,12 @@ header('Content-type: text/css');
 if (empty($dolibarr_nocache)) header('Cache-Control: max-age=3600, public, must-revalidate');
 else header('Cache-Control: no-cache');
 
+print "#sign {
+    position:relative;
+    z-index: 10;
+    text-align: center;
+    text-shadow: 0 0 3px #fff;
+    cursor: pointer;
+    border-style: dotted;
+}";
 ?>
-
-.myclasscss {
-	/* ... */
-}
-
-

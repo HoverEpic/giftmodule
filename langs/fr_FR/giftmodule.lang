@@ -39,10 +39,10 @@ GiftModuleAboutPage = Page à propos de GiftModule
 #
 # Page d'exemple
 #
-MyPageName = Nom de ma page
+GiftModulePageName = Nom de ma page
 
 #
 # Box d'exemple
 #
-MyWidget = Mon widget
-MyWidgetDescription = Description de mon widget
+GiftModuleWidget = Mon widget
+GiftModuleWidgetDescription = Description de mon widget

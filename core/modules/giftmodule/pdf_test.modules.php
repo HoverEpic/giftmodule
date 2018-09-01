@@ -75,6 +75,7 @@ class test extends ModelePDFGiftmodule {
 
         $now = dol_now();
         $id = (!is_object($gift) ? $gift : '');
+        $prefix = "justificatif-";
 
         if (!is_object($outputlangs))
             $outputlangs = $langs;
@@ -99,9 +100,9 @@ class test extends ModelePDFGiftmodule {
                 $dir = $conf->giftmodule->dir_output;
                 $file = $dir . "/SPECIMEN.html";
             } else {
-                $giftref = dol_sanitizeFileName($gift->ref);
+                $giftref = dol_sanitizeFileName($gift->id);
                 $dir = $conf->giftmodule->dir_output . "/" . $giftref;
-                $file = $dir . "/" . $giftref . "." . $this->type;
+                $file = $dir . "/" . $prefix . $giftref . "." . $this->type;
             }
 
             if (!file_exists($dir)) {

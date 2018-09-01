@@ -18,6 +18,7 @@
 #
 
 # Module label 'ModuleGiftModuleName'
+GiftModule = Dons de matière
 ModuleGiftModuleName = Dons de matière
 # Module description 'ModuleGiftModuleDesc'
 ModuleGiftModuleDesc = Gestion des dons de matière
@@ -25,9 +26,13 @@ ModuleGiftModuleDesc = Gestion des dons de matière
 #
 # Page d'administration
 #
-GiftModuleSetup = Configuration du module GiftModule
+GiftModuleSetup = Configuration du module Dons de matière
 Settings = Réglages
 GiftModuleSetupPage = Page de configuration du module GiftModule
+GIFTMODULE_AUTO_GENPDF = Générer automatiquement le justificatif PDF à la céation
+GIFTMODULE_MAIL_OBJECT = Objet par defaut du mail
+GIFTMODULE_MAIL_TEXT = Text par defaut du mail
+GIFTMODULE_THANKS_TEXT = Phrase de remerciement en bas du justificatif PDF
 
 #
 # Page À propos

@@ -886,7 +886,10 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
             $company = new Societe($db);
             $result = $company->fetch($object->fk_soc);
             if ($result == 1)
-                $mail = $company->email;
+                if ($company->email != '')
+                    $mail = $company->email;
+                else
+                    $mail = 'Anonyme';
         }
         $donorName = $object->giver;
         if ($object->fk_soc != 0) {
@@ -895,7 +898,7 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
             if ($result == 1)
                 $donorName = $company->nom;
             else
-                $donorName = "Anonyme " . $result;
+                $donorName = "Anonyme ";
         }
         $formmail->withto = $mail;
         $formmail->withtocc = 0;
@@ -932,12 +935,15 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
         $formmail->param['id'] = $object->id;
         $formmail->param['returnurl'] = $_SERVER["PHP_SELF"] . '?id=' . $object->id;
 
-        $file = DOL_DATA_ROOT . '/giftmodule/' . $object->id . '/' . $object->id . '.pdf';
-        if (is_readable($file)) {
-            $formmail->param['fileinit'] = array($file);
-//            $content=file_get_contents($file);
-//            $formmail->add_attached_files($file, 'justificatif-' . $object->id . '.pdf');
-//            $formmail->add_attached_files($file, basename($file), dol_mimetype($file));
+        if ($handle = opendir(DOL_DATA_ROOT . '/giftmodule/' . $object->id . '/')) {
+            while (false !== ($entry = readdir($handle))) { // list object files
+                if ($entry != "." && $entry != "..") { // filter
+                    $file = DOL_DATA_ROOT . '/giftmodule/' . $object->id . '/' . $entry;
+                    if (is_readable($file)) {
+                        $formmail->param['fileinit'][] = $file; // add attached file path
+                    }
+                }
+            }
         }
         //hack
         $object->element = 'user';

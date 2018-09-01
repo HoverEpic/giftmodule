@@ -150,7 +150,7 @@ class Gift extends CommonObject {
         $sql .= "'" . $this->db->escape($this->mail) . "', ";
         $sql .= ($this->fk_soc > 0 ? $this->fk_soc : 0) . ", ";
         $sql .= "'" . $this->db->escape($this->description) . "', ";
-        $sql .= "" . str_replace(',', '.', $this->db->escape($this->weight)) . ", ";
+        $sql .= "" . str_replace(',', '.', $this->db->escape($this->weight ? $this->weight : 0)) . ", ";
         $sql .= "'" . $this->db->idate($this->date) . "', ";
         $sql .= ($this->fk_user_creat > 0 ? $this->fk_user_creat : 0) . ", ";
         $sql .= $this->db->escape($this->status) . ", ";
@@ -163,7 +163,11 @@ class Gift extends CommonObject {
             $id = $this->db->last_insert_id(MAIN_DB_PREFIX . "giftmodule_gift");
             if ($id > 0) {
                 $this->id = $id;
+                $this->rowid = $id;
                 $this->db->commit();
+                if ($conf->global->GIFTMODULE_AUTO_GENPDF) {
+                    $this->generateDocument('test', $langs);
+                }
                 return $id;
             } else {
                 $this->error = $this->db->lasterror();
@@ -565,7 +569,7 @@ class Gift extends CommonObject {
 
         // Increase limit for PDF build
         $err = error_reporting();
-//        error_reporting(0);
+        error_reporting(0);
         @set_time_limit(120);
         error_reporting($err);
 

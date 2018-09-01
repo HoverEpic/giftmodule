@@ -69,10 +69,10 @@ $arrayofparameters = array(
 //    'GIFTMODULE_PDF_PHONE' => array('css' => 'minwidth200'),
 //    'GIFTMODULE_PDF_SIRET' => array('css' => 'minwidth200'),
 //    'GIFTMODULE_SIGN' => array('type' => 'sign'),
-//    'GIFTMODULE_AUTO_GENPDF' => array('type' => 'select', 'values' => array('yes', 'no'), 'default' => 'no'),
+    'GIFTMODULE_AUTO_GENPDF' => array('type' => 'select', 'values' => array('yes', 'no'), 'default' => 'no'),
 //    'GIFTMODULE_AUTO_SENDMAIL' => array('type' => 'select', 'values' => array('yes', 'no'), 'default' => 'no'),
     'GIFTMODULE_MAIL_OBJECT' => array('css' => 'minwidth200'),
-    'GIFTMODULE_MAIL_TEXT' => array('type' => 'textarea', 'options' => array('cols' => 80, 'rows' => 4)),
+    'GIFTMODULE_MAIL_TEXT' => array('type' => 'textarea', 'options' => array('cols' => 100, 'rows' => 6)),
     'GIFTMODULE_THANKS_TEXT' => array('type' => 'textarea', 'options' => array('cols' => 80, 'rows' => 2))
 );
 
@@ -81,6 +81,7 @@ $arrayofparameters = array(
  */
 
 include DOL_DOCUMENT_ROOT . '/core/actions_setmoduleoptions.inc.php';
+require_once DOL_DOCUMENT_ROOT . '/core/class/doleditor.class.php';
 
 /*
  * View
@@ -126,7 +127,7 @@ if ($action == 'edit') {
             print '<input type="hidden" name="sign" id="sign_value" value="' . $conf->global->$key . '">';
             print '</td>';
         } else
-            if ($val['type'] == "select") {
+        if ($val['type'] == "select") {
             print '<td colspan="2">';
             print '<select name="' . $key . '">';
             foreach ($val['values'] as $value) {
@@ -137,9 +138,10 @@ if ($action == 'edit') {
             print '</td>';
         } elseif ($val['type'] == "textarea") {
             print '<td colspan="2">';
-            print '<textarea name="' . $key . '" class="flat" rows="' . $val['options']['rows'] . '" cols="' . $val['options']['cols'] . '">' . $conf->global->$key . '</textarea></td>';
+            print '<textarea name="' . $key . '" class="flat ckeditor" rows="' . $val['options']['rows'] . '" cols="' . $val['options']['cols'] . '">' . $conf->global->$key . '</textarea>';
+            print '</td>';
         } else
-            print '<td><input name="' . $key . '" type=text value=' . $conf->global->$key . '></td>';
+            print '<td><input name="' . $key . '" type=text value="' . $conf->global->$key . '"></td>';
         print '</tr>';
     }
 
@@ -172,7 +174,9 @@ if ($action == 'edit') {
             print '</td>';
         } elseif ($val['type'] == "textarea") {
             print '<td colspan="2">';
-            print '<textarea name="' . $key . '" class="flat" rows="' . $val['options']['rows'] . '" cols="' . $val['options']['cols'] . '" readonly>' . $conf->global->$key . '</textarea></td>';
+//            print '<textarea name="' . $key . '" rows="' . $val['options']['rows'] . '" cols="' . $val['options']['cols'] . '" readonly>' . $conf->global->$key . '</textarea>';
+            print $conf->global->$key;
+            print '</td>';
         } else
             print '<td>' . $conf->global->$key . '</td>';
         print '</tr>';

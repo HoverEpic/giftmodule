@@ -16,17 +16,21 @@
 
 CREATE TABLE llx_giftmodule_gift(
 	-- BEGIN MODULEBUILDER FIELDS
-	rowid integer AUTO_INCREMENT PRIMARY KEY NOT NULL, 
-	entity integer DEFAULT 1 NOT NULL, 
-	label varchar(255), 
-	fk_soc integer, 
-	description text, 
-	date_creation datetime NOT NULL, 
-	tms timestamp NOT NULL, 
-	fk_user_creat integer NOT NULL, 
-	fk_user_modif integer, 
-	import_key varchar(14), 
-	status integer NOT NULL, 
-	sign blob
+	`rowid` integer AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	`entity` integer DEFAULT 1 NOT NULL,
+	`label` varchar(255),
+	`giver` varchar(255),
+	`address` varchar(255),
+	`mail` varchar(255),
+	`fk_soc` integer,
+	`description` text,
+	`weight` double,
+	`date` datetime NOT NULL,
+	`tms` timestamp NOT NULL,
+	`fk_user_creat` integer NOT NULL,
+	`fk_user_modif` integer,
+	`import_key` varchar(14),
+	`status` integer DEFAULT 1 NOT NULL,
+	`sign` blob
 	-- END MODULEBUILDER FIELDS
 ) ENGINE=innodb;

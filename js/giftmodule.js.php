@@ -83,9 +83,27 @@ else
 print "
 jQuery(function($){
     function $(el) {return document.getElementById(el.replace(/#/,''));};
+    var sign = document.getElementById('sign_value');
+    var imageLoader = document.getElementById('upload_sign');
     var canvas = document.getElementById('sign');
-    if (canvas) {
-        var context = canvas.getContext('2d');
+    var context;
+    if (canvas && canvas.nodeName.toLowerCase() === 'canvas') {
+        var width = canvas.width;
+        var height = canvas.height;
+        context = canvas.getContext('2d');
+
+        if (sign && sign.value != '') {
+            var img = new Image();
+            img.onload = function(){
+                if (context) {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    context.drawImage(img,0,0);
+                }
+            }
+            img.src = sign.value;
+        }
+
         var start = function(coors) {
             context.moveTo(coors.x, coors.y);
             context.beginPath();
@@ -142,6 +160,8 @@ jQuery(function($){
 
         // handle clear canvas
         var clear_sign = function(e) {
+            canvas.width = width;
+            canvas.height = height;
             context.clearRect(0, 0, canvas.width, canvas.height);
             console.log('Canvas cleared !');
         };
@@ -154,8 +174,11 @@ jQuery(function($){
     }
     window.onload = function() {
         var form = document.querySelector('form');
-        if (form)
+        if (form) {
             form.onsubmit = submitted.bind(form);
+            if (imageLoader)
+                imageLoader.addEventListener('change', handleImage, false);
+        }
     }
 
     function submitted(event) {
@@ -163,6 +186,22 @@ jQuery(function($){
         console.log(event);
         var pngUrl = canvas.toDataURL();
         document.getElementById('sign_value').value = pngUrl;
+    }
+
+    function handleImage(e){
+        var reader = new FileReader();
+        reader.onload = function(event){
+            var img = new Image();
+            img.onload = function(){
+                if (context) {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    context.drawImage(img,0,0);
+                }
+            }
+            img.src = event.target.result;
+        }
+        reader.readAsDataURL(e.target.files[0]);
     }
 });
 ";

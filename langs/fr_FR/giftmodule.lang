@@ -18,7 +18,7 @@
 #
 
 # Module label 'ModuleGiftModuleName'
-ModuleGiftModuleName = Don de matière
+ModuleGiftModuleName = Dons de matière
 # Module description 'ModuleGiftModuleDesc'
 ModuleGiftModuleDesc = Gestion des dons de matière
 
@@ -39,10 +39,10 @@ GiftModuleAboutPage = Page à propos de GiftModule
 #
 # Page d'exemple
 #
-GiftModulePageName = Nom de ma page
+GiftModulePageName = Dons de matière
 
 #
 # Box d'exemple
 #
-GiftModuleWidget = Mon widget
-GiftModuleWidgetDescription = Description de mon widget
+GiftModuleWidget = Dons de matière
+GiftModuleWidgetDescription = Derniers dons de matière

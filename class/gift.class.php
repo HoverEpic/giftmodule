@@ -24,8 +24,6 @@
  */
 // Put here all includes required by your class file
 require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php';
-//require_once DOL_DOCUMENT_ROOT . '/societe/class/societe.class.php';
-//require_once DOL_DOCUMENT_ROOT . '/product/class/product.class.php';
 
 /**
  * Class for Gift
@@ -80,23 +78,31 @@ class Gift extends CommonObject {
     public $fields = array(
         'rowid' => array('type' => 'integer', 'label' => 'TechnicalID', 'enabled' => 1, 'visible' => -1, 'position' => 1, 'notnull' => 1, 'index' => 1, 'comment' => "Id",),
         'entity' => array('type' => 'integer', 'label' => 'Entity', 'enabled' => 1, 'visible' => -1, 'position' => 20, 'notnull' => 1, 'index' => 1,),
-        'label' => array('type' => 'varchar(255)', 'label' => 'Label', 'enabled' => 1, 'visible' => 1, 'position' => 30, 'notnull' => -1, 'searchall' => 1, 'help' => "Help text",),
-        'fk_soc' => array('type' => 'integer:Societe:societe/class/societe.class.php', 'label' => 'ThirdParty', 'enabled' => 1, 'visible' => 1, 'position' => 50, 'notnull' => -1, 'index' => 1, 'searchall' => 1, 'help' => "LinkToThirparty",),
-        'description' => array('type' => 'text', 'label' => 'Description', 'enabled' => 1, 'visible' => -1, 'position' => 60, 'notnull' => -1,),
-        'date_creation' => array('type' => 'datetime', 'label' => 'DateCreation', 'enabled' => 1, 'visible' => -2, 'position' => 500, 'notnull' => 1,),
+        'label' => array('type' => 'varchar(255)', 'label' => 'Label', 'enabled' => 1, 'visible' => 1, 'position' => 30, 'notnull' => -1, 'searchall' => 1, 'help' => "What's given",),
+        'giver' => array('type' => 'varchar(255)', 'label' => 'Giver', 'enabled' => 1, 'visible' => 1, 'position' => 31, 'notnull' => -1, 'searchall' => 1, 'help' => "Giver's name",),
+        'address' => array('type' => 'varchar(255)', 'label' => 'Address', 'enabled' => 1, 'visible' => 1, 'position' => 31, 'notnull' => -1, 'searchall' => 1,),
+        'mail' => array('type' => 'varchar(255)', 'label' => 'Mail', 'enabled' => 1, 'visible' => 1, 'position' => 31, 'notnull' => -1, 'searchall' => 1, 'help' => "Giver's mail",),
+        'fk_soc' => array('type' => 'integer:Societe:societe/class/societe.class.php', 'label' => 'ThirdParty', 'enabled' => 1, 'visible' => 1, 'position' => 50, 'notnull' => -1, 'default' => '-1', 'index' => 1, 'searchall' => 1, 'help' => "LinkToThirparty",),
+        'description' => array('type' => 'text', 'label' => 'Description', 'enabled' => 1, 'visible' => -1, 'position' => 60, 'notnull' => -1, 'help' => "Description",),
+        'weight' => array('type' => 'double', 'label' => 'Weight', 'enabled' => 1, 'visible' => -1, 'position' => 70, 'notnull' => -1, 'help' => "Weight of the thing",),
+        'date' => array('type' => 'datetime', 'label' => 'DateCreation', 'enabled' => 1, 'visible' => 1, 'position' => 500, 'notnull' => 1,),
         'tms' => array('type' => 'timestamp', 'label' => 'DateModification', 'enabled' => 1, 'visible' => -2, 'position' => 501, 'notnull' => 1,),
         'fk_user_creat' => array('type' => 'integer', 'label' => 'UserAuthor', 'enabled' => 1, 'visible' => -2, 'position' => 510, 'notnull' => 1,),
         'fk_user_modif' => array('type' => 'integer', 'label' => 'UserModif', 'enabled' => 1, 'visible' => -2, 'position' => 511, 'notnull' => -1,),
         'import_key' => array('type' => 'varchar(14)', 'label' => 'ImportId', 'enabled' => 1, 'visible' => -2, 'position' => 1000, 'notnull' => -1,),
-        'status' => array('type' => 'integer', 'label' => 'Status', 'enabled' => 1, 'visible' => 1, 'position' => 1000, 'notnull' => 1, 'index' => 1, 'arrayofkeyval' => array('0' => 'Draft', '1' => 'Active', '-1' => 'Cancel')),
+        'status' => array('type' => 'integer', 'label' => 'Status', 'enabled' => 1, 'visible' => 1, 'position' => 1000, 'notnull' => 1, 'default' => '1', 'index' => 1, 'arrayofkeyval' => array('0' => 'Draft', '1' => 'Active', '-1' => 'Cancel')),
         'sign' => array('type' => 'blob', 'label' => 'Signature', 'enabled' => 1, 'visible' => -1, 'position' => 1100, 'notnull' => -1, 'comment' => "Giver signature",),
     );
     public $rowid;
     public $entity;
     public $label;
+    public $giver;
+    public $address;
+    public $mail;
     public $fk_soc;
     public $description;
-    public $date_creation;
+    public $weight;
+    public $date;
     public $tms;
     public $fk_user_creat;
     public $fk_user_modif;
@@ -105,28 +111,6 @@ class Gift extends CommonObject {
     public $sign;
 
     // END MODULEBUILDER PROPERTIES
-    // If this object has a subtable with lines
-
-    /**
-     * @var int    Name of subtable line
-     */
-    //public $table_element_line = 'giftdet';
-    /**
-     * @var int    Field with ID of parent key if this field has a parent
-     */
-    //public $fk_element = 'fk_gift';
-    /**
-     * @var int    Name of subtable class that manage subtable lines
-     */
-    //public $class_element_line = 'Giftline';
-    /**
-     * @var array  Array of child tables (child tables to delete before deleting a record)
-     */
-    //protected $childtables=array('giftdet');
-    /**
-     * @var GiftLine[]     Array of subtable lines
-     */
-    //public $lines = array();
 
     /**
      * Constructor
@@ -152,51 +136,44 @@ class Gift extends CommonObject {
      * @return int             <0 if KO, Id of created object if OK
      */
     public function create(User $user, $notrigger = false) {
-        return $this->createCommon($user, $notrigger);
-    }
-
-    /**
-     * Clone and object into another one
-     *
-     * @param  	User 	$user      	User that creates
-     * @param  	int 	$fromid     Id of object to clone
-     * @return 	mixed 				New object created, <0 if KO
-     */
-    public function createFromClone(User $user, $fromid) {
-        global $hookmanager, $langs;
-        $error = 0;
-
-        dol_syslog(__METHOD__, LOG_DEBUG);
-
-        $object = new self($this->db);
+        global $conf, $langs;
 
         $this->db->begin();
 
-        // Load source object
-        $object->fetchCommon($fromid);
-        // Reset some properties
-        unset($object->id);
-        unset($object->fk_user_creat);
-        unset($object->import_key);
+        $sql = "INSERT INTO " . MAIN_DB_PREFIX . "giftmodule_gift ";
+        $sql .= "(entity, label, giver, address, mail, fk_soc, description, weight, date, fk_user_creat, status, sign)";
+        $sql .= " VALUES (";
+        $sql .= $this->db->escape($conf->entity) . ", ";
+        $sql .= "'" . $this->db->escape($this->label) . "', ";
+        $sql .= "'" . $this->db->escape($this->giver) . "', ";
+        $sql .= "'" . $this->db->escape($this->address) . "', ";
+        $sql .= "'" . $this->db->escape($this->mail) . "', ";
+        $sql .= ($this->fk_soc > 0 ? $this->fk_soc : 0) . ", ";
+        $sql .= "'" . $this->db->escape($this->description) . "', ";
+        $sql .= "" . str_replace(',', '.', $this->db->escape($this->weight)) . ", ";
+        $sql .= "'" . $this->db->idate($this->date) . "', ";
+        $sql .= ($this->fk_user_creat > 0 ? $this->fk_user_creat : 0) . ", ";
+        $sql .= $this->db->escape($this->status) . ", ";
+        $sql .= "'" . $this->db->escape($this->sign) . "'";
+        $sql .= ")";
 
-        // Clear fields
-        $object->ref = "copy_of_" . $object->ref;
-        $object->title = $langs->trans("CopyOf") . " " . $object->title;
-        // ...
-        // Create clone
-        $object->context['createfromclone'] = 'createfromclone';
-        $result = $object->createCommon($user);
-        if ($result < 0) {
-            $error++;
-            $this->error = $object->error;
-            $this->errors = $object->errors;
-        }
-
-        // End
-        if (!$error) {
-            $this->db->commit();
-            return $object;
+        dol_syslog("Gift::create", LOG_DEBUG);
+        $resql = $this->db->query($sql);
+        if ($resql) {
+            $id = $this->db->last_insert_id(MAIN_DB_PREFIX . "giftmodule_gift");
+            if ($id > 0) {
+                $this->id = $id;
+                $this->db->commit();
+                return $id;
+            } else {
+                $this->error = $this->db->lasterror();
+                $this->errno = $this->db->lasterrno();
+                $this->db->rollback();
+                return -2;
+            }
         } else {
+            $this->error = $this->db->lasterror();
+            $this->errno = $this->db->lasterrno();
             $this->db->rollback();
             return -1;
         }
@@ -217,20 +194,6 @@ class Gift extends CommonObject {
     }
 
     /**
-     * Load object lines in memory from the database
-     *
-     * @return int         <0 if KO, 0 if not found, >0 if OK
-     */
-    /* public function fetchLines()
-      {
-      $this->lines=array();
-
-      // Load lines with object GiftLine
-
-      return count($this->lines)?1:0;
-      } */
-
-    /**
      * Update object into database
      *
      * @param  User $user      User that modifies
@@ -238,7 +201,34 @@ class Gift extends CommonObject {
      * @return int             <0 if KO, >0 if OK
      */
     public function update(User $user, $notrigger = false) {
-        return $this->updateCommon($user, $notrigger);
+        global $conf, $langs;
+        $this->db->begin();
+
+        $sql = "UPDATE " . MAIN_DB_PREFIX . "giftmodule_gift SET ";
+        $sql .= "label='" . $this->db->escape($this->label) . "', ";
+        $sql .= "giver='" . $this->db->escape($this->giver) . "', ";
+        $sql .= "address='" . $this->db->escape($this->address) . "', ";
+        $sql .= "mail='" . $this->db->escape($this->mail) . "', ";
+        $sql .= "fk_soc=" . ($this->fk_soc > 0 ? $this->fk_soc : 0) . ", ";
+        $sql .= "description='" . $this->db->escape($this->description) . "', ";
+        $sql .= "weight=" . str_replace(',', '.', $this->db->escape($this->weight)) . ", ";
+        $sql .= "date='" . $this->db->idate($this->date) . "', ";
+        $sql .= "fk_user_modif=" . ($this->fk_user_creat > 0 ? $this->fk_user_creat : 0) . ", ";
+        $sql .= "status=" . $this->db->escape($this->status) . ", ";
+        $sql .= "sign='" . $this->db->escape($this->sign) . "' ";
+        $sql .= "WHERE rowid=" . $this->rowid . "";
+
+        dol_syslog("Gift::update GIFTMODULE_AUTO_GENPDF=" . $conf->global->GIFTMODULE_AUTO_GENPDF, LOG_DEBUG);
+        $resql = $this->db->query($sql);
+        if ($resql) {
+            $this->db->commit();
+            return $this->rowid;
+        } else {
+            $this->error = $this->db->lasterror();
+            $this->errno = $this->db->lasterrno();
+            $this->db->rollback();
+            return -1;
+        }
     }
 
     /**
@@ -255,12 +245,12 @@ class Gift extends CommonObject {
     /**
      *  Return a link to the object card (with optionaly the picto)
      *
-     * 	@param	int		$withpicto					Include picto in link (0=No picto, 1=Include picto into link, 2=Only picto)
-     * 	@param	string	$option						On what the link point to ('nolink', ...)
-     *  @param	int  	$notooltip					1=Disable tooltip
-     *  @param  string  $morecss            		Add more css on link
-     *  @param  int     $save_lastsearch_value    	-1=Auto, 0=No save of lastsearch_values when clicking, 1=Save lastsearch_values whenclicking
-     * 	@return	string								String with URL
+     * 	@param	int	$withpicto		Include picto in link (0=No picto, 1=Include picto into link, 2=Only picto)
+     * 	@param	string	$option			On what the link point to ('nolink', ...)
+     *  @param	int  	$notooltip		1=Disable tooltip
+     *  @param  string  $morecss            	Add more css on link
+     *  @param  int     $save_lastsearch_value  -1=Auto, 0=No save of lastsearch_values when clicking, 1=Save lastsearch_values whenclicking
+     * 	@return	string				String with URL
      */
     function getNomUrl($withpicto = 0, $option = '', $notooltip = 0, $morecss = '', $save_lastsearch_value = -1) {
         global $db, $conf, $langs;
@@ -317,8 +307,8 @@ class Gift extends CommonObject {
     /**
      *  Retourne le libelle du status d'un user (actif, inactif)
      *
-     *  @param	int		$mode          0=libelle long, 1=libelle court, 2=Picto + Libelle court, 3=Picto, 4=Picto + Libelle long, 5=Libelle court + Picto
-     *  @return	string 			       Label of status
+     *  @param	int	$mode   0=libelle long, 1=libelle court, 2=Picto + Libelle court, 3=Picto, 4=Picto + Libelle long, 5=Libelle court + Picto
+     *  @return	string 		Label of status
      */
     function getLibStatut($mode = 0) {
         return $this->LibStatut($this->status, $mode);
@@ -327,9 +317,9 @@ class Gift extends CommonObject {
     /**
      *  Return the status
      *
-     *  @param	int		$status        	Id status
-     *  @param  int		$mode          	0=long label, 1=short label, 2=Picto + short label, 3=Picto, 4=Picto + long label, 5=Short label + Picto, 6=Long label + Picto
-     *  @return string 			       	Label of status
+     *  @param	int	$status     Id status
+     *  @param  int	$mode       0=long label, 1=short label, 2=Picto + short label, 3=Picto, 4=Picto + long label, 5=Short label + Picto, 6=Long label + Picto
+     *  @return string              Label of status
      */
     static function LibStatut($status, $mode = 0) {
         global $langs;
@@ -382,47 +372,47 @@ class Gift extends CommonObject {
     /**
      * 	Charge les informations d'ordre info dans l'objet commande
      *
-     * 	@param  int		$id       Id of order
+     * 	@param  int	$id    Id of order
      * 	@return	void
      */
-    function info($id) {
-        $sql = 'SELECT rowid, date_creation as datec, tms as datem,';
-        $sql .= ' fk_user_creat, fk_user_modif';
-        $sql .= ' FROM ' . MAIN_DB_PREFIX . $this->table_element . ' as t';
-        $sql .= ' WHERE t.rowid = ' . $id;
-        $result = $this->db->query($sql);
-        if ($result) {
-            if ($this->db->num_rows($result)) {
-                $obj = $this->db->fetch_object($result);
-                $this->id = $obj->rowid;
-                if ($obj->fk_user_author) {
-                    $cuser = new User($this->db);
-                    $cuser->fetch($obj->fk_user_author);
-                    $this->user_creation = $cuser;
-                }
-
-                if ($obj->fk_user_valid) {
-                    $vuser = new User($this->db);
-                    $vuser->fetch($obj->fk_user_valid);
-                    $this->user_validation = $vuser;
-                }
-
-                if ($obj->fk_user_cloture) {
-                    $cluser = new User($this->db);
-                    $cluser->fetch($obj->fk_user_cloture);
-                    $this->user_cloture = $cluser;
-                }
-
-                $this->date_creation = $this->db->jdate($obj->datec);
-                $this->date_modification = $this->db->jdate($obj->datem);
-                $this->date_validation = $this->db->jdate($obj->datev);
-            }
-
-            $this->db->free($result);
-        } else {
-            dol_print_error($this->db);
-        }
-    }
+//    function info($id) {
+//        $sql = 'SELECT rowid, date_creation as datec, tms as datem,';
+//        $sql .= ' fk_user_creat, fk_user_modif';
+//        $sql .= ' FROM ' . MAIN_DB_PREFIX . $this->table_element . ' as t';
+//        $sql .= ' WHERE t.rowid = ' . $id;
+//        $result = $this->db->query($sql);
+//        if ($result) {
+//            if ($this->db->num_rows($result)) {
+//                $obj = $this->db->fetch_object($result);
+//                $this->id = $obj->rowid;
+//                if ($obj->fk_user_author) {
+//                    $cuser = new User($this->db);
+//                    $cuser->fetch($obj->fk_user_author);
+//                    $this->user_creation = $cuser;
+//                }
+//
+//                if ($obj->fk_user_valid) {
+//                    $vuser = new User($this->db);
+//                    $vuser->fetch($obj->fk_user_valid);
+//                    $this->user_validation = $vuser;
+//                }
+//
+//                if ($obj->fk_user_cloture) {
+//                    $cluser = new User($this->db);
+//                    $cluser->fetch($obj->fk_user_cloture);
+//                    $this->user_cloture = $cluser;
+//                }
+//
+//                $this->date_creation = $this->db->jdate($obj->datec);
+//                $this->date_modification = $this->db->jdate($obj->datem);
+//                $this->date_validation = $this->db->jdate($obj->datev);
+//            }
+//
+//            $this->db->free($result);
+//        } else {
+//            dol_print_error($this->db);
+//        }
+//    }
 
     /**
      * Return HTML string to put an input field into a page
@@ -434,7 +424,7 @@ class Gift extends CommonObject {
      * @param  string  		$moreparam     To add more parameters on html input tag
      * @param  string  		$keysuffix     Prefix string to add into name and id of field (can be used to avoid duplicate names)
      * @param  string  		$keyprefix     Suffix string to add into name and id of field (can be used to avoid duplicate names)
-     * @param  string|int		$morecss       Value for css to define style/length of field. May also be a numeric.
+     * @param  string|int	$morecss       Value for css to define style/length of field. May also be a numeric.
      * @return string
      */
     function showInputField($val, $key, $value, $moreparam = '', $keysuffix = '', $keyprefix = '', $morecss = 0) {
@@ -451,10 +441,45 @@ class Gift extends CommonObject {
         $out = '';
         if ($val['type'] == 'blob') {
             $size = [256, 256];
-            $out='<canvas class="flat '.$morecss.' maxwidthonsmartphone" name="'.$keyprefix.$key.$keysuffix.'" id="'.$keyprefix.$key.$keysuffix.'" style="width: ' . $size[0] . 'px; height: ' . $size[1] . 'px;" width="' . $size[0] . '" height="' . $size[1] . '"></canvas>'
-                    . '<input type="button" class="button" name="clear" id="clear_sign" value="Clear">';
+            $out = '<label for="clear-sign" class="custom-file-upload" id="clear_sign"><i class="fa fa-trash"></i> Clear</label>'
+                    . '<input type="button" class="button" name="clear-sign" value="Clear" style="display: none"/> '
+                    . '<label for="upload_sign" class="custom-file-upload"><i class="fa fa-cloud-upload"></i> Upload</label>'
+                    . '<input type="file" id="upload_sign" style="display: none"/>'
+                    . '<br><br>'
+                    . '<canvas class="flat ' . $morecss . ' maxwidthonsmartphone" name="' . $keyprefix . $key . $keysuffix . '" id="' . $keyprefix . $key . $keysuffix . '" style="width: ' . $size[0] . 'px; height: ' . $size[1] . 'px;" width="' . $size[0] . '" height="' . $size[1] . '"></canvas>'
+                    . '';
         }
         return $out . parent::showInputField($val, $key, $value, $moreparam, $keysuffix, $keyprefix, $morecss);
+    }
+
+    /**
+     * Return HTML string to show a field into a page
+     * Code very similar with showOutputField of extra fields
+     *
+     * @param  array   $val            Array of properties of field to show
+     * @param  string  $key            Key of attribute
+     * @param  string  $value          Preselected value to show (for date type it must be in timestamp format, for amount or price it must be a php numeric value)
+     * @param  string  $moreparam      To add more parametes on html input tag
+     * @param  string  $keysuffix      Prefix string to add into name and id of field (can be used to avoid duplicate names)
+     * @param  string  $keyprefix      Suffix string to add into name and id of field (can be used to avoid duplicate names)
+     * @param  mixed   $showsize       Value for css to define size. May also be a numeric.
+     * @return string
+     */
+    function showOutputField($val, $key, $value, $moreparam = '', $keysuffix = '', $keyprefix = '', $showsize = 0) {
+        global $conf, $langs, $form;
+
+        if (!is_object($form)) {
+            require_once DOL_DOCUMENT_ROOT . '/core/class/html.form.class.php';
+            $form = new Form($this->db);
+        }
+
+        $out = '';
+        if ($val['type'] == 'blob') {
+            $size = [256, 256];
+            $out = '<img class="flat ' . $morecss . ' maxwidthonsmartphone" name="' . $keyprefix . $key . $keysuffix . '" id="' . $keyprefix . $key . $keysuffix . '" style="width: ' . $size[0] . 'px; height: ' . $size[1] . 'px;" width="' . $size[0] . '" height="' . $size[1] . '" src="' . $value . '"/>';
+            $value = '';
+        }
+        return $out . parent::showOutputField($val, $key, $value, $moreparam, $keysuffix, $keyprefix, $showsize);
     }
 
     /**
@@ -486,19 +511,126 @@ class Gift extends CommonObject {
         return 0;
     }
 
-}
+    /**
+     * 		Set last model used by doc generator
+     *
+     * 		@param		User	$user		User object that make change
+     * 		@param		string	$modelpdf	Modele name
+     * 		@return		int					<0 if KO, >0 if OK
+     */
+    function setDocModel($user, $modelpdf) {
+//        if (!$this->table_element) {
+//            dol_syslog(get_class($this) . "::setDocModel was called on objet with property table_element not defined", LOG_ERR);
+//            return -1;
+//        }
+//
+//        $newmodelpdf = dol_trunc($modelpdf, 255);
+//
+//        $sql = "UPDATE " . MAIN_DB_PREFIX . $this->table_element;
+//        $sql .= " SET model_pdf = '" . $this->db->escape($newmodelpdf) . "'";
+//        $sql .= " WHERE rowid = " . $this->id;
+//        // if ($this->element == 'facture') $sql.= " AND fk_statut < 2";
+//        // if ($this->element == 'propal')  $sql.= " AND fk_statut = 0";
+//
+//        dol_syslog(get_class($this) . "::setDocModel", LOG_DEBUG);
+//        $resql = $this->db->query($sql);
+//        if ($resql) {
+//            $this->modelpdf = $modelpdf;
+//            return 1;
+//        } else {
+//            dol_print_error($this->db);
+//            return 0;
+//        }
+        return 1;
+    }
 
-/**
- * Class GiftLine. You can also remove this and generate a CRUD class for lines objects.
- */
-/*
-class GiftLine
-{
-	// @var int ID
-	public $id;
-	// @var mixed Sample line property 1
-	public $prop1;
-	// @var mixed Sample line property 2
-	public $prop2;
+    /**
+     *  Create a document onto disk according to template module.
+     *
+     *  @param	    string		$modele			Force template to use ('' to not force)
+     *  @param		Translate	$outputlangs	objet lang a utiliser pour traduction
+     *  @param      int			$hidedetails    Hide details of lines
+     *  @param      int			$hidedesc       Hide description
+     *  @param      int			$hideref        Hide ref
+     *  @return     int         				0 if KO, 1 if OK
+     */
+    public function generateDocument($modele, $outputlangs, $hidedetails = 0, $hidedesc = 0, $hideref = 0) {
+        global $conf, $langs;
+
+        $langs->load("bills");
+
+        if (!dol_strlen($modele)) {
+            $modele = 'test';
+        }
+
+        // Increase limit for PDF build
+        $err = error_reporting();
+//        error_reporting(0);
+        @set_time_limit(120);
+        error_reporting($err);
+
+        $srctemplatepath = '';
+
+        // If selected modele is a filename template (then $modele="modelname:filename")
+        $tmp = explode(':', $modele, 2);
+        if (!empty($tmp[1])) {
+            $modele = $tmp[0];
+            $srctemplatepath = $tmp[1];
+        }
+
+        // Search template files
+        $file = '';
+        $classname = '';
+        $filefound = 0;
+        $dirmodels = array('/');
+        if (is_array($conf->modules_parts['models']))
+            $dirmodels = array_merge($dirmodels, $conf->modules_parts['models']);
+        foreach ($dirmodels as $reldir) {
+            foreach (array('html', 'doc', 'pdf') as $prefix) {
+                $file = $prefix . "_" . preg_replace('/^html_/', '', $modele) . ".modules.php";
+
+                // On verifie l'emplacement du modele
+                $file = dol_buildpath($reldir . "giftmodule/core/modules/giftmodule/" . $file, 0);
+                if (file_exists($file)) {
+                    $filefound = 1;
+                    $classname = $prefix . '_' . $modele;
+                    break;
+                }
+            }
+            if ($filefound)
+                break;
+        }
+
+        // Charge le modele
+        if ($filefound) {
+            require_once $file;
+
+            $object = $this;
+
+            $classname = $modele;
+            $obj = new $classname($this->db);
+
+            // We save charset_output to restore it because write_file can change it if needed for
+            // output format that does not support UTF8.
+            $sav_charset_output = $outputlangs->charset_output;
+            if ($obj->write_file($object, $outputlangs) > 0) {
+                $outputlangs->charset_output = $sav_charset_output;
+
+                // we delete preview files
+                require_once DOL_DOCUMENT_ROOT . '/core/lib/files.lib.php';
+                dol_delete_preview($object);
+                dol_syslog("Gift::generateDocument " . $object->rowid, LOG_DEBUG);
+                return 1;
+            } else {
+                $outputlangs->charset_output = $sav_charset_output;
+                dol_syslog("Erreur dans Gift::generateDocument " . $object->rowid);
+                dol_print_error($this->db, $obj->error);
+                return 0;
+            }
+        } else {
+            print $langs->trans("Error") . " " . $langs->trans("ErrorFileDoesNotExists", $file);
+            return 0;
+        }
+    }
+
 }
-*/

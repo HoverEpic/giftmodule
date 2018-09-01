@@ -457,7 +457,6 @@ while ($i < min($num, $limit)) {
     if (empty($obj))
         break;  // Should not happen
 
-        
 // Store properties in $object
     $object->id = $obj->rowid;
     foreach ($object->fields as $key => $val) {
@@ -480,7 +479,11 @@ while ($i < min($num, $limit)) {
             if ($align)
                 print ' class="' . $align . '"';
             print '>';
+            if ($key == 'label')
+                print "<a href=/giftmodule/gift_card.php?id=" . $object->id . "&idmenu=35>";
             print $object->showOutputField($val, $key, $obj->$key, '');
+            if ($key == 'label')
+                print "</a>";
             print '</td>';
             if (!$i)
                 $totalarray['nbfield'] ++;

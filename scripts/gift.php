@@ -19,7 +19,7 @@
 
 /**
  *      \file       scripts/gift.php
- *		\ingroup    giftmodule
+ *	\ingroup    giftmodule
  *      \brief      This file is an example for a command line script to work on Gift
  */
 
@@ -80,40 +80,32 @@ dol_include_once("/giftmodule/class/gift.class.php");
 $gift=new Gift($db);
 
 // Example for inserting creating object in database
-/*
 dol_syslog($script_file." CREATE", LOG_DEBUG);
-$gift->prop1='value_prop1';
-$gift->prop2='value_prop2';
-$id=$gift->create($user);
-if ($id < 0) { $error++; dol_print_error($db,$gift->error); }
-else print "Object created with id=".$id."\n";
-*/
+//$gift->prop1='value_prop1';
+//$gift->prop2='value_prop2';
+//$id=$gift->create($user);
+//if ($id < 0) { $error++; dol_print_error($db,$gift->error); }
+//else print "Object created with id=".$id."\n";
 
 // Example for reading object from database
-/*
-dol_syslog($script_file." FETCH", LOG_DEBUG);
-$result=$gift->fetch($id);
-if ($result < 0) { $error; dol_print_error($db,$gift->error); }
-else print "Object with id=".$id." loaded\n";
-*/
+//dol_syslog($script_file." FETCH", LOG_DEBUG);
+//$result=$gift->fetch($id);
+//if ($result < 0) { $error; dol_print_error($db,$gift->error); }
+//else print "Object with id=".$id." loaded\n";
 
 // Example for updating object in database ($gift must have been loaded by a fetch before)
-/*
-dol_syslog($script_file." UPDATE", LOG_DEBUG);
-$gift->prop1='newvalue_prop1';
-$gift->prop2='newvalue_prop2';
-$result=$gift->update($user);
-if ($result < 0) { $error++; dol_print_error($db,$gift->error); }
-else print "Object with id ".$gift->id." updated\n";
-*/
+//dol_syslog($script_file." UPDATE", LOG_DEBUG);
+//$gift->prop1='newvalue_prop1';
+//$gift->prop2='newvalue_prop2';
+//$result=$gift->update($user);
+//if ($result < 0) { $error++; dol_print_error($db,$gift->error); }
+//else print "Object with id ".$gift->id." updated\n";
 
 // Example for deleting object in database ($gift must have been loaded by a fetch before)
-/*
-dol_syslog($script_file." DELETE", LOG_DEBUG);
-$result=$gift->delete($user);
-if ($result < 0) { $error++; dol_print_error($db,$gift->error); }
-else print "Object with id ".$gift->id." deleted\n";
-*/
+//dol_syslog($script_file." DELETE", LOG_DEBUG);
+//$result=$gift->delete($user);
+//if ($result < 0) { $error++; dol_print_error($db,$gift->error); }
+//else print "Object with id ".$gift->id." deleted\n";
 
 
 // An example of a direct SQL read without using the fetch method

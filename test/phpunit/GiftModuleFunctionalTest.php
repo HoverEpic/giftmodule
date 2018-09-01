@@ -189,7 +189,7 @@ class GiftModuleFunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase
 	 */
 	public function testConfigurationPage()
 	{
-		$this->url('/custom/giftmodule/admin/setup.php');
+		$this->url('/giftmodule/admin/setup.php');
 		$this->authenticate();
 		return $this->assertContains('giftmodule/admin/setup.php', $this->url(), 'Configuration page');
 	}
@@ -201,7 +201,7 @@ class GiftModuleFunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase
 	 */
 	public function testAboutPage()
 	{
-		$this->url('/custom/giftmodule/admin/about.php');
+		$this->url('/giftmodule/admin/about.php');
 		$this->authenticate();
 		return $this->assertContains('giftmodule/admin/about.php', $this->url(), 'About page');
 	}
@@ -213,7 +213,7 @@ class GiftModuleFunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase
 	 */
 	public function testAboutPageRendersMarkdownReadme()
 	{
-		$this->url('/custom/giftmodule/admin/about.php');
+		$this->url('/giftmodule/admin/about.php');
 		$this->authenticate();
 		return $this->assertEquals(
 			'Dolibarr Module Template (aka My Module)',

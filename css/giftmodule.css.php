@@ -66,11 +66,20 @@ if (empty($dolibarr_nocache)) header('Cache-Control: max-age=3600, public, must-
 else header('Cache-Control: no-cache');
 
 print "#sign {
-    position:relative;
-    z-index: 10;
-    text-align: center;
-    text-shadow: 0 0 3px #fff;
-    cursor: pointer;
-    border-style: dotted;
-}";
+        position:relative;
+        z-index: 10;
+        text-align: center;
+        text-shadow: 0 0 3px #fff;
+        cursor: pointer;
+        border-style: dotted;
+    }
+    .custom-file-upload {
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+    }
+    .custom-file-upload i {
+        font-size: 1em;
+    }";
 ?>

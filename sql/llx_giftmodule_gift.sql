@@ -26,7 +26,7 @@ CREATE TABLE llx_giftmodule_gift(
 	`description` text,
 	`weight` double,
 	`date` datetime NOT NULL,
-	`tms` timestamp NOT NULL,
+	`tms` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`fk_user_creat` integer NOT NULL,
 	`fk_user_modif` integer,
 	`import_key` varchar(14),

@@ -170,6 +170,12 @@ jQuery(function($){
         $('#clear_sign').addEventListener('mousedown', clear_sign, false);
         $('#clear_sign').addEventListener('touchstart', clear_sign, false);
 
+        // prevent touch scrolling when drawing
+        $(window).on('touchmove', function(e) {
+            if (this.isDrawing)
+                e.preventDefault();
+        });
+
         console.log('Sign canvas ready !');
     }
     window.onload = function() {

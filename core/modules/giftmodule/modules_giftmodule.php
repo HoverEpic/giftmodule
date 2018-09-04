@@ -1,7 +1,7 @@
 <?php
 
 require_once DOL_DOCUMENT_ROOT.'/core/class/commondocgenerator.class.php';
-require_once DOL_DOCUMENT_ROOT.'/giftmodule/class/gift.class.php';
+require_once DOL_DOCUMENT_ROOT.'/custom/giftmodule/class/gift.class.php';
 
 /**
  *	Parent class of subscription templates

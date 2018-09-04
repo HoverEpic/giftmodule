@@ -66,7 +66,7 @@ if (!$res)
 require_once(DOL_DOCUMENT_ROOT . '/core/class/html.formcompany.class.php');
 require_once DOL_DOCUMENT_ROOT . '/core/lib/date.lib.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/company.lib.php';
-dol_include_once('/giftmodule/class/gift.class.php');
+dol_include_once('/custom/giftmodule/class/gift.class.php');
 
 // Load traductions files requiredby by page
 $langs->loadLangs(array("giftmodule@giftmodule", "other"));
@@ -284,7 +284,7 @@ $num = $db->num_rows($resql);
 if ($num == 1 && !empty($conf->global->MAIN_SEARCH_DIRECT_OPEN_IF_ONLY_ONE) && $search_all) {
     $obj = $db->fetch_object($resql);
     $id = $obj->rowid;
-    header("Location: " . DOL_URL_ROOT . '/giftmodule/gift_card.php?id=' . $id);
+    header("Location: " . DOL_URL_ROOT . '/custom/giftmodule/gift_card.php?id=' . $id);
     exit;
 }
 
@@ -480,7 +480,7 @@ while ($i < min($num, $limit)) {
                 print ' class="' . $align . '"';
             print '>';
             if ($key == 'label')
-                print "<a href=/giftmodule/gift_card.php?id=" . $object->id . "&idmenu=35>";
+                print "<a href=/custom/giftmodule/gift_card.php?id=" . $object->id . "&idmenu=35>";
             print $object->showOutputField($val, $key, $obj->$key, '');
             if ($key == 'label')
                 print "</a>";

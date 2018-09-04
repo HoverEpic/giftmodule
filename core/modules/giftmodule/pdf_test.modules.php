@@ -27,8 +27,8 @@
  * 	\brief      Form of donation
  */
 
-require_once DOL_DOCUMENT_ROOT . '/giftmodule/class/gift.class.php';
-require_once DOL_DOCUMENT_ROOT . '/giftmodule/core/modules/giftmodule/modules_giftmodule.php';
+require_once DOL_DOCUMENT_ROOT . '/custom/giftmodule/class/gift.class.php';
+require_once DOL_DOCUMENT_ROOT . '/custom/giftmodule/core/modules/giftmodule/modules_giftmodule.php';
 require_once DOL_DOCUMENT_ROOT . '/societe/class/societe.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/company.lib.php';
 
@@ -116,7 +116,7 @@ class test extends ModelePDFGiftmodule {
                 $formclass = new Form($this->db);
 
                 // Define contents
-                $giftmodel = DOL_DOCUMENT_ROOT . "/giftmodule/core/modules/giftmodule/pdf_test.html";
+                $giftmodel = DOL_DOCUMENT_ROOT . "/custom/giftmodule/core/modules/giftmodule/pdf_test.html";
                 $form = implode('', file($giftmodel));
 
                 $logo = $conf->global->MAIN_INFO_SOCIETE_LOGO_MINI;
@@ -161,7 +161,7 @@ class test extends ModelePDFGiftmodule {
 
                 // pdf convert if needed
                 if ($this->type == 'pdf') {
-                    include_once DOL_DOCUMENT_ROOT . '/custom//html2pdf/core/modules/modHtml2Pdf.class.php';
+                    include_once DOL_DOCUMENT_ROOT . '/custom/html2pdf/core/modules/modHtml2Pdf.class.php';
                     $form = modHtml2Pdf::html2pdf($form);
                 }
 

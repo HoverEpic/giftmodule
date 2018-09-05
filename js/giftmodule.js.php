@@ -181,8 +181,9 @@ jQuery(function($){
 
         console.log('Sign canvas ready !');
     }
+
     window.onload = function() {
-        var form = document.querySelector('form');
+        var form = document.querySelector('.fiche form');
         if (form) {
             form.onsubmit = submitted.bind(form);
             if (imageLoader)
@@ -191,9 +192,10 @@ jQuery(function($){
     }
 
     function submitted(event) {
-        console.log(event);
-        var pngUrl = canvas.toDataURL();
-        document.getElementById('sign_value').value = pngUrl;
+        if (canvas && canvas.nodeName.toLowerCase() === 'canvas') {
+            var pngUrl = canvas.toDataURL();
+            sign.value = pngUrl;
+        }
     }
 
     function handleImage(e){

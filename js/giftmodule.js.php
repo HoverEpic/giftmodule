@@ -86,6 +86,7 @@ jQuery(function($){
     var sign = document.getElementById('sign_value');
     var imageLoader = document.getElementById('upload_sign');
     var canvas = document.getElementById('sign');
+    var isDrawing = false;
     var context;
     if (canvas && canvas.nodeName.toLowerCase() === 'canvas') {
         var width = canvas.width;
@@ -107,10 +108,10 @@ jQuery(function($){
         var start = function(coors) {
             context.moveTo(coors.x, coors.y);
             context.beginPath();
-            this.isDrawing = true;
+            isDrawing = true;
         };
         var move = function(coors) {
-            if (this.isDrawing) {
+            if (isDrawing) {
                 var canvasPos = canvas.getBoundingClientRect();
                 context.strokeStyle = \"#000\";
                 context.lineJoin = \"round\";
@@ -120,9 +121,9 @@ jQuery(function($){
             }
         };
         var stop = function(coors) {
-            if (this.isDrawing) {
+            if (isDrawing) {
                 this.touchmove(coors);
-                this.isDrawing = false;
+                isDrawing = false;
             }
         };
         var drawer = {
@@ -137,10 +138,23 @@ jQuery(function($){
 
         var draw = function(e) {
             var coors = {
-                x: e.clientX || e.targetTouches[0].pageX,
-                y: e.clientY || e.targetTouches[0].pageY
+                x: 0,
+                y: 0
             };
+            if (e instanceof MouseEvent) {
+                coors.x = e.clientX;
+                coors.y = e.clientY;
+            }
+            else if (e instanceof TouchEvent && e.touches[0]) {
+                coors.x = e.touches[0].clientX;
+                coors.y = e.touches[0].clientY;
+            } else {
+                return;
+            }
             drawer[e.type](coors);
+            // prevent elastic scrolling
+            if (isDrawing)
+                e.preventDefault();
         }
 
         // mouse events listeners
@@ -152,11 +166,6 @@ jQuery(function($){
         canvas.addEventListener('touchstart', draw, false);
         canvas.addEventListener('touchmove', draw, false);
         canvas.addEventListener('touchend', draw, false);
-
-        // prevent elastic scrolling
-        document.body.addEventListener('touchmove', function(e) {
-            e.preventDefault();
-        }, false);
 
         // handle clear canvas
         var clear_sign = function(e) {
@@ -170,12 +179,6 @@ jQuery(function($){
         $('#clear_sign').addEventListener('mousedown', clear_sign, false);
         $('#clear_sign').addEventListener('touchstart', clear_sign, false);
 
-        // prevent touch scrolling when drawing
-        $(window).on('touchmove', function(e) {
-            if (this.isDrawing)
-                e.preventDefault();
-        });
-
         console.log('Sign canvas ready !');
     }
     window.onload = function() {
@@ -188,7 +191,6 @@ jQuery(function($){
     }
 
     function submitted(event) {
-//        event.preventDefault();
         console.log(event);
         var pngUrl = canvas.toDataURL();
         document.getElementById('sign_value').value = pngUrl;
@@ -211,6 +213,3 @@ jQuery(function($){
     }
 });
 ";
-?>
-
-

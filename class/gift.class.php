@@ -450,7 +450,7 @@ class Gift extends CommonObject {
                     . '<label for="upload_sign" class="custom-file-upload"><i class="fa fa-cloud-upload"></i> Upload</label>'
                     . '<input type="file" id="upload_sign" style="display: none"/>'
                     . '<br><br>'
-                    . '<canvas class="flat ' . $morecss . ' maxwidthonsmartphone" name="' . $keyprefix . $key . $keysuffix . '" id="' . $keyprefix . $key . $keysuffix . '" style="width: ' . $size[0] . 'px; height: ' . $size[1] . 'px;" width="' . $size[0] . '" height="' . $size[1] . '"></canvas>'
+                    . '<canvas class="flat ' . $morecss . '" name="' . $keyprefix . $key . $keysuffix . '" id="' . $keyprefix . $key . $keysuffix . '" style="width: ' . $size[0] . 'px; height: ' . $size[1] . 'px;" width="' . $size[0] . '" height="' . $size[1] . '"></canvas>'
                     . '';
         }
         return $out . parent::showInputField($val, $key, $value, $moreparam, $keysuffix, $keyprefix, $morecss);
@@ -480,7 +480,7 @@ class Gift extends CommonObject {
         $out = '';
         if ($val['type'] == 'blob') {
             $size = [256, 256];
-            $out = '<img class="flat ' . $morecss . ' maxwidthonsmartphone" name="' . $keyprefix . $key . $keysuffix . '" id="' . $keyprefix . $key . $keysuffix . '" style="width: ' . $size[0] . 'px; height: ' . $size[1] . 'px;" width="' . $size[0] . '" height="' . $size[1] . '" src="' . $value . '"/>';
+            $out = '<img class="flat ' . $morecss . '" name="' . $keyprefix . $key . $keysuffix . '" id="' . $keyprefix . $key . $keysuffix . '" style="width: ' . $size[0] . 'px; height: ' . $size[1] . 'px;" width="' . $size[0] . '" height="' . $size[1] . '" src="' . $value . '"/>';
             $value = '';
         }
         return $out . parent::showOutputField($val, $key, $value, $moreparam, $keysuffix, $keyprefix, $showsize);

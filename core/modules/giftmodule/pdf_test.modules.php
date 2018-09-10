@@ -141,13 +141,13 @@ class test extends ModelePDFGiftmodule {
                 $form = str_replace('__GIFTMODULE_THANKS_TEXT__', $conf->global->GIFTMODULE_THANKS_TEXT, $form);
 
                 $donorName = $gift->giver;
-                if ($gift->fk_soc != 0) {
+                if ($gift->fk_soc > 0) {
                     $company = new Societe($this->db);
                     $result = $company->fetch($gift->fk_soc);
                     if ($result == 1)
                         $donorName = $company->nom;
                     else
-                        $donorName = "Anonyme " . $result;
+                        $donorName = "Anonyme";
                 }
                 $form = str_replace('__DONATOR_NAME__', $donorName, $form);
                 $form = str_replace('__DONATOR_SIGN__', $gift->sign, $form);

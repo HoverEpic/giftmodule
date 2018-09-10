@@ -180,9 +180,7 @@ jQuery(function($){
         $('#clear_sign').addEventListener('touchstart', clear_sign, false);
 
         console.log('Sign canvas ready !');
-    }
 
-    window.onload = function() {
         var form = document.querySelector('.fiche form');
         if (form) {
             form.onsubmit = submitted.bind(form);

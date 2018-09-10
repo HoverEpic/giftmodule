@@ -119,7 +119,7 @@ class test extends ModelePDFGiftmodule {
                 $giftmodel = DOL_DOCUMENT_ROOT . "/custom/giftmodule/core/modules/giftmodule/pdf_test.html";
                 $form = implode('', file($giftmodel));
 
-                $logo = $conf->global->MAIN_INFO_SOCIETE_LOGO_MINI;
+                $logo = $conf->global->MAIN_INFO_SOCIETE_LOGO_SMALL;
                 if (!empty($logo) && is_readable($conf->mycompany->dir_output . '/logos/thumbs/' . $logo)) {
                     $logopath = $conf->mycompany->dir_output . '/logos/thumbs/' . $logo;
                 } else {
